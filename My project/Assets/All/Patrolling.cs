@@ -19,7 +19,7 @@ public class Patrolling : MonoBehaviour
 
         if (transform.position == waypoints[targetPoint].position)
         {
-            targetPoint = Random.Range(0, waypoints.Length);
+            targetPoint = (targetPoint + 1) % waypoints.Length;
         }
 
         transform.position = Vector3.MoveTowards(transform.position, waypoints[targetPoint].position, speed * Time.deltaTime);
