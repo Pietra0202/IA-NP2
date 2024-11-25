@@ -33,9 +33,9 @@ public class AwayRun : MonoBehaviour
 
         // Adiciona um desvio aleatório à direção
         MoveToPos(transform.position - (directionNormalized * travelCost));
-        
+
         directionNormalized = Quaternion.AngleAxis(Random.Range(0, 179), Vector3.up) * directionNormalized;
-        
+
     }
 
     private void MoveToPos(Vector3 position)
@@ -45,6 +45,6 @@ public class AwayRun : MonoBehaviour
         agent.isStopped = false;
     }
 
-  
+
 
 }
