@@ -22,6 +22,6 @@ public class Patrolling : MonoBehaviour
             targetPoint = (targetPoint + 1) % waypoints.Length;
         }
 
-        transform.position = Vector3.MoveTowards(transform.position, waypoints[targetPoint].position, speed * Time.deltaTime);
+        //transform.position = Vector3.MoveTowards(transform.position, waypoints[targetPoint].position, speed * Time.deltaTime);
     }
 }

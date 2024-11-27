@@ -11,8 +11,13 @@ public class AwayRun : MonoBehaviour
     [SerializeField] private float travelCost = 5f;
     private object m_Curve;
 
+    [SerializeField] private Transform[] waypoints;
+    private int targetPoint = 0;
+
     void Start()
     {
+
+        targetPoint = 0;
 
         if (agent == null)
         {
@@ -29,12 +34,21 @@ public class AwayRun : MonoBehaviour
             return;
 
         // Calcula a direção normalizada para fugir do perseguidor
-        Vector3 directionNormalized = (cheser.position - transform.position).normalized;
+        //Vector3 directionNormalized = (cheser.position - transform.position).normalized;
 
         // Adiciona um desvio aleatório à direção
-        MoveToPos(transform.position - (directionNormalized * travelCost));
+        MoveToPos(waypoints[targetPoint].position);
 
-        directionNormalized = Quaternion.AngleAxis(Random.Range(0, 179), Vector3.up) * directionNormalized;
+        if (transform.position == waypoints[targetPoint].position)
+        {
+            Debug.Log("Chegou na moeda");
+
+            Destroy(waypoints[targetPoint].gameObject);
+
+            targetPoint = Random.Range(0, waypoints.Length);
+        }
+
+        //directionNormalized = Quaternion.AngleAxis(Random.Range(0, 179), Vector3.up) * directionNormalized;
 
     }
 
@@ -45,6 +59,11 @@ public class AwayRun : MonoBehaviour
         agent.isStopped = false;
     }
 
-
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("coin"))
+        {
+            Destroy(collision.gameObject);
+        }
+    }
 }
