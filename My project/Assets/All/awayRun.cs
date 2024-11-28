@@ -11,13 +11,15 @@ public class AwayRun : MonoBehaviour
     [SerializeField] private float travelCost = 5f;
     private object m_Curve;
 
-    [SerializeField] private Transform[] waypoints;
-    private int targetPoint = 0;
+    //[SerializeField] private Transform[] waypoints;
+    [SerializeField] private List<Transform> waypoints = new List<Transform>();
+
+    public int targetPoint = 0;
 
     void Start()
     {
 
-        targetPoint = 0;
+        targetPoint = Random.Range(0, waypoints.Count);
 
         if (agent == null)
         {
@@ -30,6 +32,8 @@ public class AwayRun : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(waypoints.Count);
+
         if (cheser == null)
             return;
 
@@ -39,13 +43,15 @@ public class AwayRun : MonoBehaviour
         // Adiciona um desvio aleatório à direção
         MoveToPos(waypoints[targetPoint].position);
 
-        if (transform.position == waypoints[targetPoint].position)
+        if (transform.position.x == waypoints[targetPoint].position.x && transform.position.z == waypoints[targetPoint].position.z)
         {
             Debug.Log("Chegou na moeda");
 
             Destroy(waypoints[targetPoint].gameObject);
 
-            targetPoint = Random.Range(0, waypoints.Length);
+            waypoints.Remove(waypoints[targetPoint]);
+
+            targetPoint = Random.Range(0, waypoints.Count);
         }
 
         //directionNormalized = Quaternion.AngleAxis(Random.Range(0, 179), Vector3.up) * directionNormalized;
